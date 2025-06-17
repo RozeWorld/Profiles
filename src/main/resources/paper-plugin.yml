@@ -1,0 +1,12 @@
+name: Profiles
+version: '${version}'
+main: com.roseworld.Profiles.profiles.Profiles
+api-version: '1.21'
+authors: [ TMG8047KG ]
+description: Profiles
+dependencies:
+  server:
+    RoseKingdom:
+      required: true
+      join-classpath: true
+      load: BEFORE
