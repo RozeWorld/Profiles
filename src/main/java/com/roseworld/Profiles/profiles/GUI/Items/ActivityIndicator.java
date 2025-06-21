@@ -16,13 +16,16 @@ public class ActivityIndicator extends ItemStack {
     public ActivityIndicator(OfflinePlayer player){
         super(Material.PAPER);
         setAmount(1);
+        if (player.isOnline()) {
+            setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("pf_activity_online"));
+        } else {
+            setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("pf_activity_offline"));
+        }
         ItemMeta meta = getItemMeta();
         if(player.isOnline()){
-            setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("pf_activity_online"));
             meta.displayName(Component.text("Currently Online", TextColor.fromHexString("#17fc32"))
                     .decoration(TextDecoration.ITALIC, false));
         }else{
-            setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addString("pf_activity_offline"));
             long lastOnline = player.getLastSeen();
             int rawTime = (int) (System.currentTimeMillis()-lastOnline)/1000;
             String text = String.format("Last seen %s ago.", MillisToTime.withWord(rawTime));

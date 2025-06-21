@@ -1,10 +1,12 @@
 package com.roseworld.Profiles.profiles.Commands;
 
+import com.destroystokyo.paper.utils.PaperPluginLogger;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.rosekingdom.rosekingdom.Core.Utils.Message;
 import com.rosekingdom.rosekingdom.RoseKingdom;
 import com.roseworld.Profiles.profiles.GUI.UserGUI;
+import com.roseworld.Profiles.profiles.Profiles;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -13,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 @SuppressWarnings("UnstableApiUsage")
 public class Profile {
@@ -29,7 +32,6 @@ public class Profile {
                     return false;
                 })
                 .executes(context -> {
-                    sender.sendMessage(Component.text("Your profile: " + sender.getName()));
                     RoseKingdom.getGuiManager().openGUI(new UserGUI(sender), sender);
                     return Command.SINGLE_SUCCESS;
                 })
@@ -42,15 +44,11 @@ public class Profile {
                         })
                         .executes(context -> {
                             String name = StringArgumentType.getString(context, "Player");
-                            try {
-                                OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(name);
-                                if(player.hasPlayedBefore()) {
-                                    RoseKingdom.getGuiManager().openGUI(new UserGUI(player), sender);
-                                }else{
-                                    sender.sendMessage(Message.Warning(player.getName() + " hasn't played before!"));
-                                }
-                            }catch (Exception e){
-                                sender.sendMessage(Component.text("Player with this name does not exist!"));
+                            OfflinePlayer player = Bukkit.getServer().getOfflinePlayerIfCached(name);
+                            if(player != null) {
+                                RoseKingdom.getGuiManager().openGUI(new UserGUI(player), sender);
+                            }else{
+                                sender.sendMessage(Message.Warning(name + " hasn't played before!"));
                             }
                             return Command.SINGLE_SUCCESS;
                         }))
