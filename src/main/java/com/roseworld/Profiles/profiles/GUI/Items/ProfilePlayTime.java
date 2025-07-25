@@ -36,5 +36,6 @@ public class ProfilePlayTime extends ItemStack {
         meta.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32"))
                 .decoration(TextDecoration.ITALIC, false)));
         setItemMeta(meta);
+
     }
 }
