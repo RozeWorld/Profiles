@@ -79,12 +79,12 @@ public class UserGUI extends InventoryGUI{
                     meta.lore(List.of(Component.text(joinDate, TextColor.fromHexString("#17fc32")).decoration(TextDecoration.ITALIC, false)));
                     meta.setPlayerProfile(updatedProfile);
                     head.setItemMeta(meta);
-                    this.addButton(21, createButton(head));
+                    this.addButton(22, createButton(head));
                     super.decorate(player);
                 },
                 runnable -> Bukkit. getScheduler().runTask(RoseKingdom.getPlugin(RoseKingdom.class), runnable));
         this.addButton(8, createButton(new ActivityIndicator(target)));
-        this.addButton(22, createButton(new StreakScore(target)));
+        this.addButton(23, createButton(new StreakScore(target)));
         super.decorate(player);
     }
 
